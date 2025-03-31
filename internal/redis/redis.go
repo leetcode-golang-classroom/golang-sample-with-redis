@@ -42,6 +42,9 @@ func (rh *RedisHandler) Pipelined(ctx context.Context, handler func(pipe redis.P
 	return rh.client.Pipelined(ctx, handler)
 }
 
+func (rh *RedisHandler) Pipeline(ctx context.Context) redis.Pipeliner {
+	return rh.client.Pipeline()
+}
 func (rh *RedisHandler) HGetAll(ctx context.Context, key string) *redis.MapStringStringCmd {
 	return rh.client.HGetAll(ctx, key)
 }

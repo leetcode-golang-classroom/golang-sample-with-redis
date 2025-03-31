@@ -25,7 +25,11 @@ func Build() error {
 	if err != nil {
 		return err
 	}
-	return sh.Run("go", "build", "-o", "./bin/hash-sample", "./cmd/hash-sample/main.go")
+	err = sh.Run("go", "build", "-o", "./bin/hash-sample", "./cmd/hash-sample/main.go")
+	if err != nil {
+		return err
+	}
+	return sh.Run("go", "build", "-o", "./bin/pipeline-sample", "./cmd/pipeline-sample/main.go")
 }
 
 // start the basic-sample
@@ -42,6 +46,16 @@ func LaunchBasicSample() error {
 func LaunchHashSample() error {
 	mg.Deps(Build)
 	err := sh.RunV("./bin/hash-sample")
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// start the pipeline-sample
+func LaunchPipelineSample() error {
+	mg.Deps(Build)
+	err := sh.RunV("./bin/pipeline-sample")
 	if err != nil {
 		return err
 	}
