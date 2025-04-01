@@ -37,7 +37,12 @@ func (rh *RedisHandler) Get(ctx context.Context, key string) (string, error) {
 	return result, err
 }
 
-// Pipelined -
+// Watch
+func (rh *RedisHandler) Watch(ctx context.Context, fn func(*redis.Tx) error, keys ...string) error {
+	return rh.client.Watch(ctx, fn, keys...)
+}
+
+// Pipelined - handle pipeline with transaction
 func (rh *RedisHandler) Pipelined(ctx context.Context, handler func(pipe redis.Pipeliner) error) ([]redis.Cmder, error) {
 	return rh.client.Pipelined(ctx, handler)
 }
